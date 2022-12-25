@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const ProfileCard = styled.div`
 	display: flex;
 	flex-direction: row;
-	align-items: stretch;
 
 	padding: 32px 32px 32px 40px;
 	gap: 32px;
@@ -26,7 +25,7 @@ export const ProfileCard = styled.div`
 export const TextContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+
 	padding: 8px 0 0 0;
 	flex: 1;
 `
@@ -68,25 +67,29 @@ export const TextContentBody = styled.span`
 	color: ${(props) => props.theme['blue-200']};
 	line-height: 1.6;
 	margin-top: 8px;
-	flex: 1;
 `
 
 export const SocialContent = styled.div`
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	max-width: 393px;
-	width: 100%;
 
-	> span {
+	margin-top: 28px;
+	gap: 24px;
+	flex-wrap: wrap;
+
+	div {
 		display: flex;
-		color: ${(props) => props.theme['blue-200']};
-		line-height: 1.6;
+		max-height: 26px;
+		height: 100%;
 		align-items: center;
-		> svg {
-			margin-right: 8.56px;
+
+		svg {
+			margin-right: 8px;
 			color: ${(props) => props.theme['blue-400']};
+		}
+
+		span {
+			color: ${(props) => props.theme['blue-200']};
 		}
 	}
 `

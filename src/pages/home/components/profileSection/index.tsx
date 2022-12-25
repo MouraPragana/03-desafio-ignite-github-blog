@@ -30,18 +30,19 @@ export function ProfileSection() {
 				</TextContentBody>
 
 				<SocialContent>
-					<span>
-						<ImGithub size={17} />
-						MouraPragana
-					</span>
-					<span>
-						<FaBuilding size={17} />
-						Rocketseat
-					</span>
-					<span>
-						<BsPeopleFill size={17} />
-						100 seguidores
-					</span>
+					<div>
+						<ImGithub size={18} />
+						<span>MouraPragana</span>
+					</div>
+
+					<div>
+						<FaBuilding size={18} /> <span>Rocketseat</span>
+					</div>
+
+					<div>
+						<BsPeopleFill size={18} />
+						<span>100 seguidores</span>
+					</div>
 				</SocialContent>
 			</TextContent>
 		</ProfileCard>
