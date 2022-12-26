@@ -33,6 +33,7 @@ export const HeaderTitle = styled.span`
 	color: ${(props) => props.theme['blue-100']};
 	font-size: 1.125rem;
 	line-height: 1.6;
+	font-weight: bold;
 `
 
 export const HeaderInfo = styled.span`
