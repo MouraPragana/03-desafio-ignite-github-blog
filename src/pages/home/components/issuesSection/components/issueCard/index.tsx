@@ -1,17 +1,22 @@
 import { Body, Header, Info, IssueCardStyle, Title } from './styles'
 
-export function IssueCard() {
+interface IssueCardProps {
+	title: string
+	body: string
+}
+
+export function IssueCard({ title, body }: IssueCardProps) {
+	function cutBodyText() {
+		return body.length >= 200 ? `${body.substring(0, 200)}...` : body
+	}
+
 	return (
 		<IssueCardStyle>
 			<Header>
-				<Title>JavaScript data types and data structures</Title>
+				<Title>{title}</Title>
 				<Info>Há 1 dia</Info>
 			</Header>
-			<Body>
-				Programming languages all have build-in data structures, but these often
-				dinner from one language to another. This article attempts to list the
-				build-in data structures available in...
-			</Body>
+			<Body>{cutBodyText()}</Body>
 		</IssueCardStyle>
 	)
 }

@@ -14,7 +14,7 @@ import {
 } from './styles'
 
 export function ProfileSection() {
-	const profile = useProfile()
+	const profile = useProfile('MouraPragana')
 
 	return (
 		<ProfileCard>

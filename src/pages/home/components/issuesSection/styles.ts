@@ -44,7 +44,7 @@ export const HeaderInfo = styled.span`
 
 export const IssuesBody = styled.div`
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(2, 416px);
 	gap: 32px;
 	margin-top: 48px;
 	margin-bottom: 48px;

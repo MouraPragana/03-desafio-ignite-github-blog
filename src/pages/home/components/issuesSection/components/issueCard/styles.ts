@@ -8,6 +8,7 @@ export const IssueCardStyle = styled.div`
 	background: ${(props) => props.theme['blue-600']};
 	border-radius: 10px;
 	padding: 32px;
+	cursor: pointer;
 `
 
 export const Header = styled.div`

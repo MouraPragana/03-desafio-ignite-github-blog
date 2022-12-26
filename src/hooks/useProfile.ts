@@ -19,27 +19,26 @@ interface ProfileInterface extends IFetchStatus {
 	data?: AxiosDataInterface
 }
 
-export function useProfile() {
+export function useProfile(nameProfile: string) {
 	const [profile, setProfile] = useState({
 		status: 'loading',
 	} as ProfileInterface)
 
-	const fetchDataProfile = useCallback(async (user: string) => {
+	const fetchDataProfile = useCallback(async () => {
 		setProfile({ status: 'loading' })
 
 		// Para simular demora de resposta api.
-		await new Promise((resolve) => setTimeout(resolve, 700))
+		// await new Promise((resolve) => setTimeout(resolve, 700))
 		await api
-			.get<AxiosDataInterface>(`/users/${user}`)
+			.get<AxiosDataInterface>(`/users/${nameProfile}`)
 			.then((response) => {
 				setProfile({ data: response.data, status: 'loaded' })
 			})
 			.catch(() => setProfile({ status: 'error' }))
-	}, [])
+	}, [nameProfile])
 
 	useEffect(() => {
-		const user = 'MouraPragana'
-		fetchDataProfile(user)
+		fetchDataProfile()
 	}, [fetchDataProfile])
 
 	return profile
