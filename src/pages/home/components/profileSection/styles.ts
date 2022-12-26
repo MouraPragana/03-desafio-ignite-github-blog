@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const ProfileCard = styled.div`
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 
 	padding: 32px 32px 32px 40px;
 	gap: 32px;
