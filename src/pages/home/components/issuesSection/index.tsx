@@ -1,3 +1,4 @@
+import { LinearProgress } from '@mui/material'
 import { ChangeEvent, useState } from 'react'
 import { useIssues } from '../../../../hooks/useIssues'
 import { IssueCard } from './components/issueCard'
@@ -23,7 +24,7 @@ export function IssuesSection() {
 		clearTimeout(timer)
 		const newTimer = setTimeout(() => {
 			filterNewIssues(e.target.value)
-		}, 1200)
+		}, 700)
 		setTimer(newTimer)
 	}
 
@@ -33,23 +34,33 @@ export function IssuesSection() {
 				<div>
 					<HeaderTitle>Publicações</HeaderTitle>
 					<HeaderInfo>
-						{issues && issues?.total_count > 1
-							? issues?.total_count + ' publicações'
-							: issues?.total_count + ' publicação'}
+						{issues.data && issues.data.total_count > 1
+							? issues.data.total_count + ' publicações'
+							: issues.data && issues.data.total_count + ' publicação'}
 					</HeaderInfo>
 				</div>
 				<input
 					type="text"
 					placeholder="Buscar conteúdo"
 					onChange={handleInputTyping}
+					disabled={issues.status === 'loading'}
 				/>
 			</IssuesHeader>
+			{issues.status === 'loading' && (
+				<LinearProgress sx={{ marginTop: '20px' }} />
+			)}
 			<IssuesBody>
-				{issues?.items.map((issue) => {
-					return (
-						<IssueCard key={issue.id} title={issue.title} body={issue.body} />
-					)
-				})}
+				{issues.data &&
+					issues.data.items.map((issue) => {
+						return (
+							<IssueCard
+								key={issue.id}
+								title={issue.title}
+								body={issue.body}
+								created_at={issue.created_at}
+							/>
+						)
+					})}
 			</IssuesBody>
 		</IssuesContent>
 	)

@@ -30,13 +30,17 @@ export const Title = styled.span`
 	max-width: 283px;
 	width: 100%;
 	color: ${(props) => props.theme['blue-50']};
+
+	@media screen and (max-width: 768px) {
+		font-size: 1.1rem;
+	}
 `
 
 export const Info = styled.span`
-	width: 53px;
 	line-height: 1.6;
 	font-size: 0.875rem;
 	color: ${(props) => props.theme['blue-300']};
+	width: fit-content;
 `
 
 export const Body = styled.span`

@@ -5,7 +5,7 @@ interface IFetchStatus {
 	status: 'loading' | 'loaded' | 'error'
 }
 
-interface AxiosDataInterface {
+interface IAxiosData {
 	avatar_url: string
 	bio: string
 	company: string
@@ -15,22 +15,23 @@ interface AxiosDataInterface {
 	html_url: string
 }
 
-interface ProfileInterface extends IFetchStatus {
-	data?: AxiosDataInterface
+interface IProfileInterface extends IFetchStatus {
+	data?: IAxiosData
 }
 
 export function useProfile(nameProfile: string) {
 	const [profile, setProfile] = useState({
 		status: 'loading',
-	} as ProfileInterface)
+	} as IProfileInterface)
 
 	const fetchDataProfile = useCallback(async () => {
 		setProfile({ status: 'loading' })
 
-		// Para simular demora de resposta api.
-		// await new Promise((resolve) => setTimeout(resolve, 700))
+		// Aumentar tempo para buscar o retorno, mostrar o skeleton de loading.
+		await new Promise((resolve) => setTimeout(resolve, 1000))
+
 		await api
-			.get<AxiosDataInterface>(`/users/${nameProfile}`)
+			.get<IAxiosData>(`/users/${nameProfile}`)
 			.then((response) => {
 				setProfile({ data: response.data, status: 'loaded' })
 			})
