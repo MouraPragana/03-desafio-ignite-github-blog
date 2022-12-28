@@ -1,11 +1,17 @@
 import styled from 'styled-components'
 
-export const ProfileCard = styled.div`
+interface IProfileCard {
+	status: 'loaded' | 'loading' | 'error'
+}
+
+export const ProfileCard = styled.div<IProfileCard>`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 
-	padding: 32px 32px 32px 40px;
+	padding: ${(props) =>
+		props.status === 'loading' ? '0 2rem' : '32px 32px 32px 40px'};
+
 	gap: 32px;
 
 	background: ${(props) => props.theme['blue-700']};
@@ -22,7 +28,6 @@ export const ProfileCard = styled.div`
 		border-radius: 8px;
 	}
 `
-
 export const TextContent = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -62,6 +67,10 @@ export const TextContentLink = styled.a`
 	> svg {
 		height: 20px;
 	}
+`
+
+export const SkeletonContainer = styled.div`
+	width: 100%;
 `
 
 export const TextContentBody = styled.span`
