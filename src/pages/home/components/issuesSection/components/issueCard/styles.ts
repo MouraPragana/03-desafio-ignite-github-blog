@@ -9,12 +9,6 @@ export const IssueCardStyle = styled.div`
 	border-radius: 10px;
 	padding: 32px;
 	cursor: pointer;
-
-	&:hover {
-		outline: 1px solid ${(props) => props.theme['blue-400']};
-		scale: 1.01;
-		transition: all 0.1s ease-in;
-	}
 `
 
 export const Header = styled.div`

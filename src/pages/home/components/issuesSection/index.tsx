@@ -5,6 +5,7 @@ import { IssueCard } from './components/issueCard'
 import {
 	HeaderInfo,
 	HeaderTitle,
+	IssueCardContainer,
 	IssuesBody,
 	IssuesContent,
 	IssuesHeader,
@@ -53,12 +54,13 @@ export function IssuesSection() {
 				{issues.data &&
 					issues.data.items.map((issue) => {
 						return (
-							<IssueCard
-								key={issue.id}
-								title={issue.title}
-								body={issue.body}
-								created_at={issue.created_at}
-							/>
+							<IssueCardContainer to={`/post/${issue.id}`} key={issue.id}>
+								<IssueCard
+									title={issue.title}
+									body={issue.body}
+									created_at={issue.created_at}
+								/>
+							</IssueCardContainer>
 						)
 					})}
 			</IssuesBody>

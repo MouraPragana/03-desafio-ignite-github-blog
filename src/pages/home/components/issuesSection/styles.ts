@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const IssuesContent = styled.div`
 	max-width: 864px;
@@ -51,5 +52,16 @@ export const IssuesBody = styled.div`
 
 	@media screen and (max-width: 768px) {
 		grid-template-columns: 1fr;
+	}
+`
+
+export const IssueCardContainer = styled(Link)`
+	text-decoration: none;
+	border-radius: 10px;
+
+	&:hover {
+		outline: 1px solid ${(props) => props.theme['blue-400']};
+		scale: 1.01;
+		transition: all 0.1s ease-in;
 	}
 `

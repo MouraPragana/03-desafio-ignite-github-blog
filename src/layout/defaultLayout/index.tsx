@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { Header, PageContent } from './styles'
+import { Body, Header, PageContent } from './styles'
 import logo from '../../assets/logo.svg'
 
 export function DefaultLayout() {
@@ -8,7 +8,9 @@ export function DefaultLayout() {
 			<Header>
 				<img src={logo} alt="Github Blog Logo" />
 			</Header>
-			<Outlet />
+			<Body>
+				<Outlet />
+			</Body>
 		</PageContent>
 	)
 }

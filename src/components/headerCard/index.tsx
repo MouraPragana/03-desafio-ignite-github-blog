@@ -1,4 +1,4 @@
-import { Skeleton } from '@mui/material'
+import { CircularProgress } from '@mui/material'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import {
 	ProfileCard,
@@ -43,10 +43,11 @@ export function HeaderCard({
 	thirdTextIcon,
 }: IHeaderCardProps) {
 	return (
-		<ProfileCard status={status}>
+		<ProfileCard>
 			{status === 'loading' ? (
 				<SkeletonContainer>
-					<Skeleton sx={{ height: '100%', width: '100%' }} />
+					<p>Carregando informações do perfil</p>
+					<CircularProgress />
 				</SkeletonContainer>
 			) : (
 				<>
