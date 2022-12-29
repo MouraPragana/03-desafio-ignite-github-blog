@@ -17,6 +17,7 @@ interface IAxiosData {
 		body: string
 		title: string
 		created_at: string
+		number: number
 	}[]
 }
 

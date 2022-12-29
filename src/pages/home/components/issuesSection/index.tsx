@@ -54,7 +54,7 @@ export function IssuesSection() {
 				{issues.data &&
 					issues.data.items.map((issue) => {
 						return (
-							<IssueCardContainer to={`/post/${issue.id}`} key={issue.id}>
+							<IssueCardContainer to={`/post/${issue.number}`} key={issue.id}>
 								<IssueCard
 									title={issue.title}
 									body={issue.body}
