@@ -1,11 +1,14 @@
 import { BsPeopleFill } from 'react-icons/bs'
 import { FaBuilding } from 'react-icons/fa'
 import { ImGithub } from 'react-icons/im'
+import { useContextSelector } from 'use-context-selector'
 import { HeaderCard } from '../../../../components/headerCard'
-import { useProfile } from '../../../../hooks/useProfile'
+import { ProfileContext } from '../../../../context/profileContext'
 
 export function ProfileSection() {
-	const profile = useProfile('MouraPragana')
+	const profile = useContextSelector(ProfileContext, (context) => {
+		return context
+	})
 
 	return (
 		<HeaderCard

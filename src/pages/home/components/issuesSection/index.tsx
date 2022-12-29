@@ -14,7 +14,7 @@ import {
 export function IssuesSection() {
 	const [timer, setTimer] = useState(0)
 
-	const { issues, filterNewIssues } = useIssues({
+	const { issues, fetchIssues } = useIssues({
 		profile: 'MouraPragana',
 		repo: '03-desafio-ignite-github-blog',
 	})
@@ -24,7 +24,7 @@ export function IssuesSection() {
 	function handleInputTyping(e: ChangeEvent<HTMLInputElement>) {
 		clearTimeout(timer)
 		const newTimer = setTimeout(() => {
-			filterNewIssues(e.target.value)
+			fetchIssues(e.target.value)
 		}, 700)
 		setTimer(newTimer)
 	}

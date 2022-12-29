@@ -1,10 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
 import { api } from '../lib/axios'
 
-interface IFetchIssuesStatus {
-	status: 'loading' | 'loaded' | 'error'
-}
-
 interface IFetchIssuesProps {
 	profile: string
 	repo: string
@@ -21,8 +17,9 @@ interface IAxiosData {
 	}[]
 }
 
-interface IIssuesInterface extends IFetchIssuesStatus {
+interface IIssuesInterface {
 	data?: IAxiosData
+	status: 'loading' | 'loaded' | 'error'
 }
 
 export function useIssues({ profile, repo }: IFetchIssuesProps) {
@@ -31,10 +28,8 @@ export function useIssues({ profile, repo }: IFetchIssuesProps) {
 	const fetchIssues = useCallback(
 		async (query = '') => {
 			setIssues({ status: 'loading' })
-
 			// Aumentar tempo para buscar o retorno, mostrar o linear progress.
 			await new Promise((resolve) => setTimeout(resolve, 1000))
-
 			await api
 				.get<IAxiosData>('/search/issues', {
 					params: {
@@ -49,16 +44,9 @@ export function useIssues({ profile, repo }: IFetchIssuesProps) {
 		[profile, repo],
 	)
 
-	const filterNewIssues = useCallback(
-		(query: string) => {
-			fetchIssues(query)
-		},
-		[fetchIssues],
-	)
-
 	useEffect(() => {
 		fetchIssues()
 	}, [fetchIssues])
 
-	return { issues, filterNewIssues }
+	return { issues, fetchIssues }
 }
