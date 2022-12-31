@@ -1,5 +1,5 @@
 import { LinearProgress } from '@mui/material'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useContextSelector } from 'use-context-selector'
 import { GithubBlogContext } from '../../../../context/profileContext'
 import { IssueCard } from './components/issueCard'
@@ -26,6 +26,10 @@ export function IssuesSection() {
 	const fetchIssues = useContextSelector(GithubBlogContext, (context) => {
 		return context.fetchIssues
 	})
+
+	useEffect(() => {
+		fetchIssues('')
+	}, [fetchIssues])
 
 	// https://developer.mozilla.org/en-US/docs/Web/API/setTimeout
 	// https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout
