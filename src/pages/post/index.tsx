@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { BsFillCalendar2Fill, BsFillChatFill } from 'react-icons/bs'
 import { ImGithub } from 'react-icons/im'
 import ReactMarkdown from 'react-markdown'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { HeaderCard } from '../../components/headerCard'
 import { api } from '../../lib/axios'
 import { formatDateDistanceFromNow } from '../../utils/formatter'
@@ -52,7 +52,6 @@ export function Post() {
 				`/repos/MouraPragana/03-desafio-ignite-github-blog/issues/${issueNumber}`,
 			)
 			.then((response) => {
-				console.log(response.data)
 				setIssueInfo({ issue: response.data, status: 'loaded' })
 			})
 			.catch(() => navigate('/'))
@@ -79,7 +78,7 @@ export function Post() {
 				thirdTextIcon={fraseDeQuantosComentarios()}
 			/>
 			<BodyContent>
-				{issueInfo?.issue && (
+				{issueInfo && issueInfo.issue && issueInfo.status === 'loaded' && (
 					<ReactMarkdown
 						components={{
 							p: ({ node, ...props }) => (

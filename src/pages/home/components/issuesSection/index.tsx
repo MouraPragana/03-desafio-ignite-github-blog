@@ -1,4 +1,4 @@
-import { Button, LinearProgress } from '@mui/material'
+import { LinearProgress } from '@mui/material'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useContextSelector } from 'use-context-selector'
 import { GithubBlogContext } from '../../../../context/githubBlogContext'
@@ -10,6 +10,7 @@ import {
 	IssuesBody,
 	IssuesContent,
 	IssuesHeader,
+	ReloadButton,
 } from './styles'
 
 export function IssuesSection() {
@@ -26,6 +27,24 @@ export function IssuesSection() {
 	const fetchIssues = useContextSelector(GithubBlogContext, (context) => {
 		return context.fetchIssues
 	})
+
+	const fraseDePublicações = () => {
+		return issues && issues.total_count > 1
+			? `${issues.total_count} publicações`
+			: issues && issues.total_count === 1
+			? `${issues.total_count} publicação`
+			: 'Nenhuma publicação'
+	}
+
+	const isInputDisabled = () => {
+		return !!(issuesLoadStatus === 'loading' || issuesLoadStatus === 'error')
+	}
+
+	const inputPlaceholder = () => {
+		return issuesLoadStatus === 'error'
+			? 'Recarregue a aplicação'
+			: 'Buscar conteúdo'
+	}
 
 	useEffect(() => {
 		fetchIssues('')
@@ -46,17 +65,13 @@ export function IssuesSection() {
 			<IssuesHeader>
 				<div>
 					<HeaderTitle>Publicações</HeaderTitle>
-					<HeaderInfo>
-						{issues && issues.total_count > 1
-							? issues.total_count + ' publicações'
-							: issues && issues.total_count + ' publicação'}
-					</HeaderInfo>
+					<HeaderInfo>{fraseDePublicações()}</HeaderInfo>
 				</div>
 				<input
 					type="text"
-					placeholder="Buscar conteúdo"
+					placeholder={inputPlaceholder()}
 					onChange={handleInputTyping}
-					disabled={issuesLoadStatus === 'loading'}
+					disabled={isInputDisabled()}
 				/>
 			</IssuesHeader>
 
@@ -65,19 +80,9 @@ export function IssuesSection() {
 			)}
 
 			{issuesLoadStatus === 'error' && (
-				<Button
-					variant="outlined"
-					onClick={() => fetchIssues('')}
-					sx={{
-						width: '100%',
-						justifyItems: 'center',
-						justifyContent: 'center',
-						marginTop: '20px',
-						padding: '10px',
-					}}
-				>
-					Tentar novamente
-				</Button>
+				<ReloadButton onClick={() => fetchIssues('')}>
+					Clique aqui para tentar novamente ou recarregue a página.
+				</ReloadButton>
 			)}
 
 			<IssuesBody>

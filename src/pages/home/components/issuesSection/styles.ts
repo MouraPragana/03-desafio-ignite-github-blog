@@ -7,6 +7,24 @@ export const IssuesContent = styled.div`
 	margin-top: 72px;
 `
 
+export const ReloadButton = styled.button`
+	color: ${(props) => props.theme.brand};
+	padding: 1rem 2rem;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	cursor: pointer;
+	border: none;
+	border-radius: 8px;
+	width: 100%;
+	margin-top: 20px;
+
+	&[disabled] {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+`
+
 export const IssuesHeader = styled.div`
 	display: flex;
 	flex-direction: column;

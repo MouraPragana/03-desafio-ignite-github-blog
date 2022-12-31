@@ -34,7 +34,8 @@ export const Info = styled.span`
 	line-height: 1.6;
 	font-size: 0.875rem;
 	color: ${(props) => props.theme['blue-300']};
-	width: fit-content;
+	max-width: fit-content;
+	margin-left: 1rem;
 `
 
 export const Body = styled.span`
