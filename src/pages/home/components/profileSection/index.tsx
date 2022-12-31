@@ -3,7 +3,7 @@ import { FaBuilding } from 'react-icons/fa'
 import { ImGithub } from 'react-icons/im'
 import { useContextSelector } from 'use-context-selector'
 import { HeaderCard } from '../../../../components/headerCard'
-import { GithubBlogContext } from '../../../../context/profileContext'
+import { GithubBlogContext } from '../../../../context/githubBlogContext'
 
 export function ProfileSection() {
 	const profile = useContextSelector(GithubBlogContext, (context) => {
@@ -14,8 +14,17 @@ export function ProfileSection() {
 		return context.profileLoadStatus
 	})
 
+	const fraseDeQuantosSeguidores = () => {
+		return profile && profile?.followers > 1
+			? `${profile?.followers} seguidores`
+			: profile?.followers === 1
+			? `${profile?.followers} seguidor`
+			: 'Nenhum seguidor'
+	}
+
 	return (
 		<HeaderCard
+			height="212px"
 			imageUrl={profile?.avatar_url}
 			title={profile?.name}
 			textLink="github"
@@ -27,7 +36,7 @@ export function ProfileSection() {
 			thirdIcon={<BsPeopleFill size={18} />}
 			firstTextIcon={profile?.login}
 			secondTextIcon={profile?.company}
-			thirdTextIcon={`${profile?.followers} seguidores`}
+			thirdTextIcon={fraseDeQuantosSeguidores()}
 		/>
 	)
 }

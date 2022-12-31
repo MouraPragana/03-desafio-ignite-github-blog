@@ -1,7 +1,7 @@
-import { LinearProgress } from '@mui/material'
+import { Button, LinearProgress } from '@mui/material'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useContextSelector } from 'use-context-selector'
-import { GithubBlogContext } from '../../../../context/profileContext'
+import { GithubBlogContext } from '../../../../context/githubBlogContext'
 import { IssueCard } from './components/issueCard'
 import {
 	HeaderInfo,
@@ -59,11 +59,30 @@ export function IssuesSection() {
 					disabled={issuesLoadStatus === 'loading'}
 				/>
 			</IssuesHeader>
+
 			{issuesLoadStatus === 'loading' && (
 				<LinearProgress sx={{ marginTop: '20px' }} />
 			)}
+
+			{issuesLoadStatus === 'error' && (
+				<Button
+					variant="outlined"
+					onClick={() => fetchIssues('')}
+					sx={{
+						width: '100%',
+						justifyItems: 'center',
+						justifyContent: 'center',
+						marginTop: '20px',
+						padding: '10px',
+					}}
+				>
+					Tentar novamente
+				</Button>
+			)}
+
 			<IssuesBody>
 				{issues &&
+					issuesLoadStatus === 'loaded' &&
 					issues.items.map((issue) => {
 						return (
 							<IssueCardContainer to={`/post/${issue.number}`} key={issue.id}>

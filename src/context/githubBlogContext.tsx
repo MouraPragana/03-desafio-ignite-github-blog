@@ -12,12 +12,7 @@ interface IAxiosProfileData {
 	html_url: string
 }
 
-interface IProfileInfo {
-	profile?: IAxiosProfileData
-	status: 'loading' | 'loaded' | 'error'
-}
-
-interface IIssuesInfo {
+interface IAxiosIssuesData {
 	total_count: number
 	items: {
 		id: number
@@ -28,14 +23,19 @@ interface IIssuesInfo {
 	}[]
 }
 
+interface IProfileInterface {
+	profile?: IAxiosProfileData
+	status: 'loading' | 'loaded' | 'error'
+}
+
 interface IIssuesInterface {
-	issues?: IIssuesInfo
+	issues?: IAxiosIssuesData
 	status: 'loading' | 'loaded' | 'error'
 }
 
 interface GithubBlogContextType {
 	profile?: IAxiosProfileData
-	issues?: IIssuesInfo
+	issues?: IAxiosIssuesData
 	profileLoadStatus: 'loading' | 'loaded' | 'error'
 	issuesLoadStatus: 'loading' | 'loaded' | 'error'
 	fetchIssues: (query: string) => void
@@ -50,7 +50,7 @@ interface IProfileContextProvider {
 export function GithubBlogContextProvider({
 	children,
 }: IProfileContextProvider) {
-	const [profileInfo, setProfileInfo] = useState<IProfileInfo>({
+	const [profileInfo, setProfileInfo] = useState<IProfileInterface>({
 		status: 'loading',
 	})
 
@@ -75,7 +75,7 @@ export function GithubBlogContextProvider({
 		// Aumentar tempo para buscar o retorno, mostrar o linear progress.
 		await new Promise((resolve) => setTimeout(resolve, 1000))
 		await api
-			.get<IIssuesInfo>('/search/issues', {
+			.get<IAxiosIssuesData>('/search/issues', {
 				params: {
 					q: `${query} repo:MouraPragana/03-desafio-ignite-github-blog`,
 				},

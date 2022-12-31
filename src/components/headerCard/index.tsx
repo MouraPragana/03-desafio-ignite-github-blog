@@ -1,5 +1,6 @@
 import { CircularProgress } from '@mui/material'
 import { FaExternalLinkAlt } from 'react-icons/fa'
+import { GoChevronLeft } from 'react-icons/go'
 import {
 	ProfileCard,
 	SkeletonContainer,
@@ -8,16 +9,20 @@ import {
 	TextContentBody,
 	TextContentHeader,
 	TextContentLink,
+	TextContentLinkTo,
 	TextContentTitle,
 } from './styles'
 
 interface IHeaderCardProps {
+	backLinkText?: string
+	height: string
+
 	imageUrl?: string
 	title?: string
 	textLink: string
 	link?: string
 	body?: string
-	status: 'loaded' | 'loading' | 'error'
+	status?: 'loaded' | 'loading' | 'error'
 
 	firstIcon: JSX.Element
 	secondIcon: JSX.Element
@@ -29,6 +34,8 @@ interface IHeaderCardProps {
 }
 
 export function HeaderCard({
+	backLinkText = '',
+	height,
 	imageUrl,
 	title,
 	textLink,
@@ -43,28 +50,39 @@ export function HeaderCard({
 	thirdTextIcon,
 }: IHeaderCardProps) {
 	return (
-		<ProfileCard>
-			{status === 'loading' || status === undefined ? (
+		<ProfileCard height={height}>
+			{status === 'loading' && (
 				<SkeletonContainer>
-					<p>Carregando informações do perfil</p>
+					<p>Carregando as informações</p>
 					<CircularProgress />
 				</SkeletonContainer>
-			) : (
-				<>
-					<img src={imageUrl} alt="Profile pic" />
+			)}
 
+			{status === 'loaded' && (
+				<>
+					{imageUrl && <img src={imageUrl} alt="Profile pic" />}
 					<TextContent>
 						<TextContentHeader>
-							<TextContentTitle>{title}</TextContentTitle>
+							{title && <TextContentTitle>{title}</TextContentTitle>}
+
+							{backLinkText && (
+								<TextContentLinkTo to="/">
+									<GoChevronLeft size={12} /> {backLinkText}
+								</TextContentLinkTo>
+							)}
 
 							<TextContentLink href={link} target="_blank" rel="noreferrer">
 								{textLink} <FaExternalLinkAlt size={12} />
 							</TextContentLink>
 						</TextContentHeader>
 
-						<TextContentBody>{body}</TextContentBody>
+						{body && (
+							<TextContentBody backLinkText={backLinkText}>
+								{body}
+							</TextContentBody>
+						)}
 
-						<SocialContent>
+						<SocialContent backLinkText={backLinkText}>
 							<div>
 								{firstIcon}
 								<span>{firstTextIcon}</span>

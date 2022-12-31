@@ -1,6 +1,15 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
-export const ProfileCard = styled.div`
+interface IProfileCard {
+	height: string
+}
+
+interface ICardBackLink {
+	backLinkText: string
+}
+
+export const ProfileCard = styled.div<IProfileCard>`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -13,8 +22,7 @@ export const ProfileCard = styled.div`
 	margin-top: -88px;
 	max-width: 864px;
 	width: 100%;
-	min-height: 212px;
-	height: 100%;
+	min-height: ${(props) => props.height};
 	border-radius: 10px;
 
 	img {
@@ -49,7 +57,28 @@ export const TextContentLink = styled.a`
 	gap: 8.36px;
 	color: ${(props) => props.theme.brand};
 	text-transform: uppercase;
-	line-height: 1.6;
+
+	font-size: 0.75rem;
+	font-weight: bold;
+	text-decoration: none;
+	height: 20px;
+	border-bottom: 1px solid transparent;
+	transition: border 0.2s;
+	&:hover {
+		border-bottom: 1px solid ${(props) => props.theme.brand};
+	}
+	> svg {
+		height: 20px;
+	}
+`
+
+export const TextContentLinkTo = styled(Link)`
+	display: flex;
+	align-items: center;
+	gap: 8.36px;
+	color: ${(props) => props.theme.brand};
+	text-transform: uppercase;
+
 	font-size: 0.75rem;
 	font-weight: bold;
 	text-decoration: none;
@@ -82,17 +111,27 @@ export const SkeletonContainer = styled.div`
 	}
 `
 
-export const TextContentBody = styled.span`
+export const TextContentBody = styled.span<ICardBackLink>`
 	color: ${(props) => props.theme['blue-200']};
 	line-height: 1.6;
 	margin-top: 8px;
+
+	${(props) =>
+		props.backLinkText &&
+		css`
+			font-weight: bold;
+			font-size: 1.5rem;
+			color: ${(props) => props.theme['blue-50']};
+			line-height: 1.3;
+			margin-top: 20px;
+		`}
 `
 
-export const SocialContent = styled.div`
+export const SocialContent = styled.div<ICardBackLink>`
 	display: flex;
 	flex-direction: row;
 
-	margin-top: 28px;
+	margin-top: ${(props) => (props.backLinkText ? '8px' : '28px')};
 	gap: 24px;
 	flex-wrap: wrap;
 
