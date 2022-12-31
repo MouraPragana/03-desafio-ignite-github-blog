@@ -2,7 +2,7 @@ import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { createContext } from 'use-context-selector'
 import { api } from '../lib/axios'
 
-interface IAxiosData {
+interface IAxiosProfileData {
 	avatar_url: string
 	bio: string
 	company: string
@@ -12,43 +12,96 @@ interface IAxiosData {
 	html_url: string
 }
 
-interface ProfileContextType {
-	data?: IAxiosData
+interface IProfileInfo {
+	profile?: IAxiosProfileData
 	status: 'loading' | 'loaded' | 'error'
 }
 
-export const ProfileContext = createContext({} as ProfileContextType)
+interface IIssuesInfo {
+	total_count: number
+	items: {
+		id: number
+		body: string
+		title: string
+		created_at: string
+		number: number
+	}[]
+}
+
+interface IIssuesInterface {
+	issues?: IIssuesInfo
+	status: 'loading' | 'loaded' | 'error'
+}
+
+interface GithubBlogContextType {
+	profile?: IAxiosProfileData
+	issues?: IIssuesInfo
+	profileLoadStatus: 'loading' | 'loaded' | 'error'
+	issuesLoadStatus: 'loading' | 'loaded' | 'error'
+	fetchIssues: (query: string) => void
+}
+
+export const GithubBlogContext = createContext({} as GithubBlogContextType)
 
 interface IProfileContextProvider {
 	children: ReactNode
 }
 
-export function ProfileContextProvider({ children }: IProfileContextProvider) {
-	const [profile, setProfile] = useState<ProfileContextType>({
+export function GithubBlogContextProvider({
+	children,
+}: IProfileContextProvider) {
+	const [profileInfo, setProfileInfo] = useState<IProfileInfo>({
+		status: 'loading',
+	})
+
+	const [issuesInfo, setIssuesInfo] = useState<IIssuesInterface>({
 		status: 'loading',
 	})
 
 	const fetchDataProfile = useCallback(async () => {
-		setProfile({ status: 'loading' })
+		setProfileInfo({ status: 'loading' })
 		// Aumentar tempo para buscar o retorno, mostrar o skeleton de loading.
 		await new Promise((resolve) => setTimeout(resolve, 1000))
 		await api
-			.get<IAxiosData>(`/users/MouraPragana`)
+			.get<IAxiosProfileData>(`/users/MouraPragana`)
 			.then((response) => {
-				setProfile({ data: response.data, status: 'loaded' })
+				setProfileInfo({ profile: response.data, status: 'loaded' })
 			})
-			.catch(() => setProfile({ status: 'error' }))
+			.catch(() => setProfileInfo({ status: 'error' }))
+	}, [])
+
+	const fetchIssues = useCallback(async (query = '') => {
+		setIssuesInfo({ status: 'loading' })
+		// Aumentar tempo para buscar o retorno, mostrar o linear progress.
+		await new Promise((resolve) => setTimeout(resolve, 1000))
+		await api
+			.get<IIssuesInfo>('/search/issues', {
+				params: {
+					q: `${query} repo:MouraPragana/03-desafio-ignite-github-blog`,
+				},
+			})
+			.then((response) => {
+				setIssuesInfo({ issues: response.data, status: 'loaded' })
+			})
+			.catch(() => setIssuesInfo({ status: 'error' }))
 	}, [])
 
 	useEffect(() => {
 		fetchDataProfile()
-	}, [fetchDataProfile])
+		fetchIssues()
+	}, [fetchDataProfile, fetchIssues])
 
 	return (
-		<ProfileContext.Provider
-			value={{ data: profile.data, status: profile.status }}
+		<GithubBlogContext.Provider
+			value={{
+				profile: profileInfo.profile,
+				profileLoadStatus: profileInfo.status,
+				issues: issuesInfo.issues,
+				issuesLoadStatus: issuesInfo.status,
+				fetchIssues,
+			}}
 		>
 			{children}
-		</ProfileContext.Provider>
+		</GithubBlogContext.Provider>
 	)
 }

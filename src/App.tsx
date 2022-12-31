@@ -3,17 +3,17 @@ import { GlobalStyle } from './styles/global'
 import { defaultTheme } from './styles/themes/default'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './router'
-import { ProfileContextProvider } from './context/profileContext'
+import { GithubBlogContextProvider } from './context/profileContext'
 
 export function App() {
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<GlobalStyle />
-			<ProfileContextProvider>
+			<GithubBlogContextProvider>
 				<BrowserRouter>
 					<Router />
 				</BrowserRouter>
-			</ProfileContextProvider>
+			</GithubBlogContextProvider>
 		</ThemeProvider>
 	)
 }

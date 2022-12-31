@@ -1,6 +1,7 @@
 import { LinearProgress } from '@mui/material'
 import { ChangeEvent, useState } from 'react'
-import { useIssues } from '../../../../hooks/useIssues'
+import { useContextSelector } from 'use-context-selector'
+import { GithubBlogContext } from '../../../../context/profileContext'
 import { IssueCard } from './components/issueCard'
 import {
 	HeaderInfo,
@@ -14,9 +15,16 @@ import {
 export function IssuesSection() {
 	const [timer, setTimer] = useState(0)
 
-	const { issues, fetchIssues } = useIssues({
-		profile: 'MouraPragana',
-		repo: '03-desafio-ignite-github-blog',
+	const issues = useContextSelector(GithubBlogContext, (context) => {
+		return context.issues
+	})
+
+	const issuesLoadStatus = useContextSelector(GithubBlogContext, (context) => {
+		return context.issuesLoadStatus
+	})
+
+	const fetchIssues = useContextSelector(GithubBlogContext, (context) => {
+		return context.fetchIssues
 	})
 
 	// https://developer.mozilla.org/en-US/docs/Web/API/setTimeout
@@ -35,24 +43,24 @@ export function IssuesSection() {
 				<div>
 					<HeaderTitle>Publicações</HeaderTitle>
 					<HeaderInfo>
-						{issues.data && issues.data.total_count > 1
-							? issues.data.total_count + ' publicações'
-							: issues.data && issues.data.total_count + ' publicação'}
+						{issues && issues.total_count > 1
+							? issues.total_count + ' publicações'
+							: issues && issues.total_count + ' publicação'}
 					</HeaderInfo>
 				</div>
 				<input
 					type="text"
 					placeholder="Buscar conteúdo"
 					onChange={handleInputTyping}
-					disabled={issues.status === 'loading'}
+					disabled={issuesLoadStatus === 'loading'}
 				/>
 			</IssuesHeader>
-			{issues.status === 'loading' && (
+			{issuesLoadStatus === 'loading' && (
 				<LinearProgress sx={{ marginTop: '20px' }} />
 			)}
 			<IssuesBody>
-				{issues.data &&
-					issues.data.items.map((issue) => {
+				{issues &&
+					issues.items.map((issue) => {
 						return (
 							<IssueCardContainer to={`/post/${issue.number}`} key={issue.id}>
 								<IssueCard

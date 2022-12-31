@@ -44,7 +44,7 @@ export function HeaderCard({
 }: IHeaderCardProps) {
 	return (
 		<ProfileCard>
-			{status === 'loading' ? (
+			{status === 'loading' || status === undefined ? (
 				<SkeletonContainer>
 					<p>Carregando informações do perfil</p>
 					<CircularProgress />
